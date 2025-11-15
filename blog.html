@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anushka Tripathi - Blog">
+    <title>Blog - Anushka Tripathi</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Anushka Tripathi</a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="writes.html">Writes</a></li>
+                <li><a href="reads.html">Reads</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div id="blog-content" class="blog-content">
+            <!-- Blog content will be dynamically inserted here -->
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="writes.html">Writes</a>
+                <a href="reads.html">Reads</a>
+            </div>
+            <p class="copyright">&copy; 2025 Anushka Tripathi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/blogs.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Get blog ID from URL parameters
+        function getBlogId() {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get('id');
+        }
+
+        // Render blog content
+        function renderBlog() {
+            const container = document.getElementById('blog-content');
+            if (!container || !blogsData) return;
+
+            const blogId = getBlogId();
+            const blog = blogId ? blogsData[blogId] : null;
+
+            if (!blog) {
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h2>The requested blog could not be found.</h2>
+                        <p>Please check the URL or return to the <a href="writes.html">writes page</a>.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = `
+                <div class="blog-header">
+                    <h1 class="blog-title">${blog.title}</h1>
+                    <div class="blog-meta">
+                        ${blog.date ? `<span><i class="far fa-calendar"></i> ${blog.date}</span>` : ''}
+                        ${blog.readTime ? `<span><i class="far fa-clock"></i> ${blog.readTime}</span>` : ''}
+                    </div>
+                </div>
+                <div class="blog-body">
+                    ${blog.content}
+                </div>
+            `;
+
+            container.innerHTML = html;
+
+            // Update page title
+            document.title = `${blog.title} - Anushka Tripathi`;
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderBlog);
+        } else {
+            renderBlog();
+        }
+    </script>
+
+</body>
+</html>
+

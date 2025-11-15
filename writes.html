@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Anushka Tripathi - Writes">
+    <title>Writes - Anushka Tripathi</title>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<body>
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Anushka Tripathi</a>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="menu-toggle" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <!-- Navigation Links -->
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="writes.html">Writes</a></li>
+                <li><a href="reads.html">Reads</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- PAGE HERO BANNER-->
+    <div class="page-hero" style="background-image: url('images/hero-background.jpg');">
+        <div class="page-hero-overlay">
+            <div class="page-hero-content">
+                <h1 class="page-hero-title">My Writes</h1>
+                <p class="page-hero-subtitle">Blogs &#8226; Ideas &#8226; Thoughts</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <section class="section">
+                <h2 class="section-title">My Writings</h2>
+                <p class="section-subtitle">Thoughts, ideas, and insights on data analysis, technology, and more.</p>
+                
+                <div id="writes-container" class="cards-list">
+                    <!-- Write items will be dynamically inserted here -->
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="projects.html">Projects</a>
+                <a href="writes.html">Writes</a>
+                <a href="reads.html">Reads</a>
+            </div>
+            <p class="copyright">&copy; 2025 Anushka Tripathi. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="js/writes-data.js"></script>
+    <script src="js/navigation.js"></script>
+    <script>
+        // Render writes items
+        function renderWrites() {
+            const container = document.getElementById('writes-container');
+            if (!container || !writesData) return;
+
+            container.innerHTML = '';
+
+            writesData.forEach(item => {
+                const card = document.createElement('a');
+                card.className = 'card';
+                card.href = `blog.html?id=${item.id}`;
+                card.style.cursor = 'pointer';
+                card.style.textDecoration = 'none';
+                card.style.display = 'block';
+
+                let html = `<h3 class="card-title">${item.title}</h3>`;
+                
+                html += `<div class="card-meta">`;
+                if (item.date) {
+                    html += `<span><i class="far fa-calendar"></i> ${item.date}</span>`;
+                }
+                if (item.readTime) {
+                    html += `<span><i class="far fa-clock"></i> ${item.readTime}</span>`;
+                }
+                html += `</div>`;
+
+                html += `<p class="card-description">${item.preview}</p>`;
+                html += `<span class="card-link">Read full article <i class="fas fa-arrow-right"></i></span>`;
+
+                card.innerHTML = html;
+                container.appendChild(card);
+            });
+        }
+
+        // Initialize when DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', renderWrites);
+        } else {
+            renderWrites();
+        }
+    </script>
+
+</body>
+</html>
+
